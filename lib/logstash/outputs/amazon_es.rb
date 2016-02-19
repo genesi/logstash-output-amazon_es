@@ -156,9 +156,10 @@ class LogStash::Outputs::AmazonES < LogStash::Outputs::Base
   # - create: indexes a document, fails if a document by that id already exists in the index.
   # - update: updates a document by id
   # following action is not supported by HTTP protocol
-  #
+  # - A sprintf style string to change the action based on the content of the event. The value `%{[foo]}`
+  #   would use the foo field for the action
   # For more details on actions, check out the http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-bulk.html[Elasticsearch bulk API documentation]
-  config :action, :validate => %w(index delete create update), :default => "index"
+  config :action, :validate => :string, :default => "index"
 
   # Username and password (only valid when protocol is HTTP; this setting works with HTTP or HTTPS auth)
   config :user, :validate => :string
